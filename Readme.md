@@ -65,6 +65,7 @@ module "vpc_dev" {
       }
 
 В terraform concole имеем следующий вывод:
+
 <img src='images/task2-console_moduleinfo.png'/>
 
 ## Генерация документации
