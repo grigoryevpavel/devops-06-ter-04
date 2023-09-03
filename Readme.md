@@ -100,3 +100,41 @@ module "vpc_dev" {
   <img src='images/task3-state_import4.png'/>
 
   В результате получаем идентичный стейт.
+
+# Задание 4*
+
+1. Измените модуль vpc так, чтобы он мог создать подсети во всех зонах доступности, переданных в переменной типа list(object) при вызове модуля.  
+  
+Пример вызова
+```
+module "vpc_prod" {
+  source       = "./vpc"
+  env_name     = "production"
+  subnets = [
+    { zone = "ru-central1-a", cidr = "10.0.1.0/24" },
+    { zone = "ru-central1-b", cidr = "10.0.2.0/24" },
+    { zone = "ru-central1-c", cidr = "10.0.3.0/24" },
+  ]
+}
+
+module "vpc_dev" {
+  source       = "./vpc"
+  env_name     = "develop"
+  subnets = [
+    { zone = "ru-central1-a", cidr = "10.0.1.0/24" },
+  ]
+}
+```
+
+Предоставьте код, план выполнения, результат из консоли YC.
+
+# Решение 4*
+
+План исполнения:
+
+1. Исходный код модуля vpc_prod находится по ссылке (ссылка)[modules/vpc_prod]
+2. План выполнения привел к созданию 1 сети и 3 новых подсетей, а также автоматически обновились две ВМ из-за настройки allow_stopping_for_update
+   <img src='images/task4-plan1.png'/>
+   <img src='images/task4-plan2.png'/>
+3. После применения всех изменений вид консоли yandex ниже:
+   <img src='images/task4-yc.png'/>
