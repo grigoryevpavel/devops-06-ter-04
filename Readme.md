@@ -73,3 +73,30 @@ module "vpc_dev" {
 Для генерации документации используется модуль terraform-docs и команда:
 > terraform-docs markdown table --output-file Readme.md ./modules/vpc_dev
 
+
+# Задание 3
+1. Выведите список ресурсов в стейте.
+2. Полностью удалите из стейта модуль vpc.
+3. Полностью удалите из стейта модуль vm.
+4. Импортируйте всё обратно. Проверьте terraform plan. Изменений быть не должно.
+Приложите список выполненных команд и скриншоты процессы.
+
+# Решение 3
+
+1. Решением является результат команды **terraform state list**
+   <img src='images/task3-state1.png'/>
+2. Решением является команда **terraform state rm module.vpc_dev**
+   <img src='images/task3-state2.png'/>
+3. Решение является команда **terraform state rm module.test-vm**
+   <img src='images/task3-state3.png'/>
+4. Решением является следующий набор команд:
+   - terraform import module.vpc_dev.yandex_vpc_network.network enppass101jktnrdr4lr
+  <img src='images/task3-state_import1.png'/>
+   - terraform import module.vpc_dev.yandex_vpc_subnet.subnet e9bak2jp72oog0nuur5c
+  <img src='images/task3-state_import2.png'/>
+   - terraform import module.test-vm.yandex_compute_instance.vm[0] fhm5ouertrnslub0plr6
+  <img src='images/task3-state_import3.png'/>
+   - terraform import module.test-vm.yandex_compute_instance.vm[1] fhm6do5uod31lf2gb694
+  <img src='images/task3-state_import4.png'/>
+
+  В результате получаем идентичный стейт.
